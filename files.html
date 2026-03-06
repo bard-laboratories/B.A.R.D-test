@@ -1,187 +1,74 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>B.A.R.D Files</title>
-
-<!-- Uses your existing site theme -->
-style.css
-
-<!-- Local styles only for this Files hub -->
-<style>
-  /* Container panel */
-  .files { background:#fff; border:1px solid #cfc7b6; box-shadow:0 1px 0 #bfb7a4; padding:16px; }
-  .files h2 { margin:0 0 12px; font-size:20px; }
-
-  /* Top-level list that shows as "> Item" */
-  .files-list { list-style:none; padding:0; margin:0; }
-  .files-list li { margin:10px 0; }
-  .files-list summary { cursor:pointer; font-weight:800; color:#0b3c66; outline:none; }
-  .files-list summary::marker { content: ""; }           /* Hide default marker */
-  .files-list summary::before { content: "> "; color:#0b3c66; margin-right:6px; font-weight:900; }
-
-  /* Nested expandable blocks (<details>) */
-  details { background:#fff; border:1px solid #ddd; padding:10px 12px; margin:8px 0; }
-  details > summary { font-weight:800; color:#0b3c66; cursor:pointer; }
-  details > summary::marker { content: ""; }
-  details > summary::before { content: "> "; color:#0b3c66; margin-right:6px; font-weight:900; }
-
-  /* Small helper classes */
-  .grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
-  .meta { font-size:12px; color:#555; }
-  .divider { height:1px; background:#c5bfae; margin:14px 0; }
-  .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace; }
-  @media (max-width: 900px){ .grid-2 { grid-template-columns: 1fr; } }
-</style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>B.A.R.D. – Files</title>
+  <meta name="description" content="B.A.R.D. – Files and downloads" />
+  /assets/favicon.ico
+  <style>
+    :root { --bg:#0f1117; --panel:#151a23; --text:#e6e6e6; --muted:#aab2c0; --brand:#7aa2f7; --accent:#89d185; }
+    * { box-sizing: border-box; }
+    body { margin:0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, "Helvetica Neue", Arial; background:var(--bg); color:var(--text); line-height:1.5; }
+    header { position: sticky; top:0; z-index: 10; background: rgba(15,17,23,.85); backdrop-filter: blur(8px); border-bottom:1px solid #1f2430; }
+    .wrap { max-width: 1100px; margin: 0 auto; padding: 1rem 1.25rem; }
+    .brand { font-weight:700; letter-spacing:.4px; color:var(--brand); text-decoration:none; }
+    nav { display:flex; gap:.75rem; flex-wrap:wrap; margin-top:.5rem; }
+    nav a { color:var(--muted); text-decoration:none; padding:.4rem .65rem; border-radius:.4rem; }
+    nav a:hover { color:var(--text); background:#1a2230; }
+    nav a[aria-current="page"] { color:var(--text); background:#1f2a3d; border:1px solid #2a3850; }
+    main { padding: 2rem 1.25rem; }
+    h1 { margin:.25rem 0 1rem; font-size: clamp(1.6rem, 2.5vw, 2rem); }
+    .panel { background:var(--panel); border:1px solid #1f2430; border-radius:.6rem; padding:1.25rem; }
+    .files { display:grid; grid-template-columns: repeat(auto-fit, minmax(260px,1fr)); gap:1rem; margin-top:1rem; }
+    .file { border:1px solid #1f2430; background:#121823; border-radius:.6rem; padding:1rem; }
+    .file a { color:var(--accent); text-decoration:none; word-break: break-all; }
+    .file small { color:var(--muted); display:block; margin-top:.25rem; }
+    code { background:#0c0f14; padding:.1rem .35rem; border-radius:.3rem; border:1px solid #1a2130; }
+  </style>
 </head>
-
 <body>
-<div class="wrap">
-
-  <!-- Page header -->
   <header>
-    assets/bard_logo.png
-    <div>
-      <h1>B.A.R.D Files</h1>
-      <div class="sub">Documents & Reference</div>
+    <div class="wrap">
+      <a class="brand".D.</a>
+      <nav aria-label="Primary">
+        /index.htmlHome</a>
+        /projects.htmlProjects</a>
+        /files.htmlFiles</a>
+        /locations.htmlLocations</a>
+        /contact.htmlContact</a>
+      </nav>
     </div>
   </header>
 
-  <!-- Your site navigation -->
-  <nav>
-    index.htmlHome</a>
-    bard.htmlAbout B.A.R.D</a>
-    locations.htmlLocations</a>
-    projects.htmlProjects</a>
-    robots.htmlRobotics</a>
-    dossier.htmlDossiers</a>
-    terminal.htmlTerminal</a>
-    files.html<strong>Files</strong></a>
-    admin/admin-login.htmlAdmin</a>
-  </nav>
+  <main class="wrap">
+    <section class="panel">
+      <h1>Files</h1>
+      <p>Links to documents and assets stored in this repository. Make sure the **paths and filenames match exactly** (case-sensitive).</p>
+      <p><strong>Tip:</strong> If you move files into <code>/assets</code>, update the links below to <code>/assets/…</code>.</p>
+    </section>
 
-  <!-- FILES HUB -->
-  <section class="files">
-    <h2>B.A.R.D Files</h2>
+    <section class="files" aria-label="File list">
+      <article class="file">
+        <h2>/assets/docs/overview.pdfoverview.pdf</a></h2>
+        <small>/assets/docs/overview.pdf</small>
+      </article>
 
-    <!-- Top-level menu as > items, each opens to its own set -->
-    <ul class="files-list">
+      <article class="file">
+        <h2>/assets/data/sample.csvsample.csv</a></h2>
+        <small>/assets/data/sample.csv</small>
+      </article>
 
-      <!-- ===================== ROBOTS ===================== -->
-      <li>
-        <details open>
-          <summary>B.A.R.D ROBOTS (files for each robot type & specifications)</summary>
-          <div class="meta" style="margin:6px 0 10px">
-            Gameplay guides recognise two robot categories: <strong>Machine‑Gun Type</strong> and <strong>Flamethrower Type</strong>. Weak‑points include optics/sensors, weapons & fuel tanks, and the Atomic Battery; overheating ejects the battery for a non‑explosive disable. [1](https://gamerant.com/atomfall-how-deal-with-fight-destroy-bard-robots/)[2](blob:https://outlook.office.com/d8aa9298-550b-4053-8e47-953c3a9b9c2c)
-          </div>
+      <article class="file">
+        <h2>/assets/images/logo.pnglogo.png</a></h2>
+        <small>/assets/images/logo.png</small>
+      </article>
 
-          <!-- Each robot opens like: > Robot type -> robot information -->
-          <details>
-            <summary>Class B Robot Unit 45 — (Machine‑Gun Type)</summary>
-            <div class="grid-2">
-              <div>
-                <p><strong>Role:</strong> patrol & door security; stabilised belt‑fed fire.</p>
-                <p><strong>Field notes:</strong> Prioritise the optics (“eyes”). Sustained hits force overheat → battery eject. Avoid long, open sightlines.</p>
-              </div>
-              <div>
-                <p class="meta">Source: enemy/robot guides. [1](https://gamerant.com/atomfall-how-deal-with-fight-destroy-bard-robots/)</p>
-              </div>
-            </div>
-          </details>
-
-          <details>
-            <summary>Orange B.A.R.D Robot — (Machine‑Gun Type)</summary>
-            <p><strong>Notes:</strong> Hazard‑panel livery frequently seen around Interchange & exterior compounds; same gun platform behaviour as other MG units.</p>
-            <p class="meta">Context: B.A.R.D location lists & community documentation. [3](blob:https://outlook.office.com/976515e3-36c7-4749-975c-025c401ddfdf)</p>
-          </details>
-
-          <details>
-            <summary>White B.A.R.D Robot — (Machine‑Gun Type)</summary>
-            <p><strong>Notes:</strong> Common on lab/interior patrols; standard MG behaviour.</p>
-            <p class="meta">Context: community documentation. [3](blob:https://outlook.office.com/976515e3-36c7-4749-975c-025c401ddfdf)</p>
-          </details>
-
-          <details>
-            <summary>Black B.A.R.D Robot — (Machine‑Gun Type)</summary>
-            <p><strong>Notes:</strong> Low‑visibility finish for yards/night posts; treat as high‑threat at range.</p>
-            <p class="meta">Context: community documentation. [3](blob:https://outlook.office.com/976515e3-36c7-4749-975c-025c401ddfdf)</p>
-          </details>
-
-          <details>
-            <summary>Flamethrower Variant — (Flamethrower Type)</summary>
-            <div class="grid-2">
-              <div>
-                <p><strong>Notes:</strong> Shielded sensors; visible red fuel tanks are weak points. Use distance and cover; never commit in tight corridors.</p>
-              </div>
-              <div>
-                <p class="meta">Combat tips & weak‑points: flamethrower write‑ups. [2](blob:https://outlook.office.com/d8aa9298-550b-4053-8e47-953c3a9b9c2c)</p>
-              </div>
-            </div>
-          </details>
-
-          <details>
-            <summary>Heavy Machine‑Gun Variant — (Machine‑Gun Type)</summary>
-            <p><strong>Notes:</strong> Long‑range suppression; smoke/hard cover; do not repeat‑peek. Blinding optics triggers overheat → battery eject for disable.</p>
-            <p class="meta">Disable strategy & categories. [1](https://gamerant.com/atomfall-how-deal-with-fight-destroy-bard-robots/)</p>
-          </details>
-
-          <div class="divider"></div>
-          <p class="meta">Tip: If you’re publishing robot images per variant, keep filenames consistent (e.g., <span class="mono">/assets/robots/bard_robot_flamethrower.png</span>) and they’ll drop into existing pages.</p>
-        </details>
-      </li>
-
-      <!-- ===================== B.A.R.D FILES ===================== -->
-      <li>
-        <details>
-          <summary>B.A.R.D FILES (general documents on B.A.R.D)</summary>
-          <p><strong>Identity:</strong> B.A.R.D managed the <em>Windscale</em> facility and a surrounding bunker lattice; emblem often shown as orange‑white “eye‑in‑atom”; motto frequently cited as <em>“Nova Lux Discutit Umbras Antiquas.”</em> [3](blob:https://outlook.office.com/976515e3-36c7-4749-975c-025c401ddfdf)</p>
-
-          <details>
-            <summary>Locations (Windscale & Lattice)</summary>
-            <ul>
-              <li>Windscale surface complex (cover for deeper research nodes).</li>
-              <li>Interchange Robotics Facility (construction/maintenance/testing).</li>
-              <li>Bunkers L1–L15 (e.g., L4 Chemical Testing, L10 Security/Detention, L15 Testing Grounds). [3](blob:https://outlook.office.com/976515e3-36c7-4749-975c-025c401ddfdf)</li>
-            </ul>
-          </details>
-
-          <details>
-            <summary>Security & Access</summary>
-            <p>Multiple coloured keycards and controlled doors are referenced alongside robotic sentry presence and alarm nodes. [3](blob:https://outlook.office.com/976515e3-36c7-4749-975c-025c401ddfdf)</p>
-          </details>
-        </details>
-      </li>
-
-      <!-- ===================== USERS / PERSONNEL ===================== -->
-      <li>
-        <details>
-          <summary>USERS (B.A.R.D personnel information & names)</summary>
-          <ul>
-            <li>Dr. Diane Garrow — Robotics (orange keycard references). [3](blob:https://outlook.office.com/976515e3-36c7-4749-975c-025c401ddfdf)</li>
-            <li>Dr J. L. Howard — Mechanical heuristics; Dr F. Howard — Robotics. [3](blob:https://outlook.office.com/976515e3-36c7-4749-975c-025c401ddfdf)</li>
-            <li>W. Medcalf, S. Wright — X‑Ray Scatter Team. [3](blob:https://outlook.office.com/976515e3-36c7-4749-975c-025c401ddfdf)</li>
-            <li>D. Lancaster, R. Docherty — Inspections/operations. [3](blob:https://outlook.office.com/976515e3-36c7-4749-975c-025c401ddfdf)</li>
-          </ul>
-          <p class="meta">Names are in‑universe per community docs; use as flavour in your site.</p>
-        </details>
-      </li>
-
-      <!-- ===================== PROJECTS ===================== -->
-      <li>
-        <details>
-          <summary>PROJECTS (current B.A.R.D lore projects)</summary>
-          <ul>
-            <li><strong>Robotics Sentry Programme</strong> — autonomous facility defense. [3](blob:https://outlook.office.com/976515e3-36c7-4749-975c-025c401ddfdf)</li>
-            <li><strong>X‑Ray Scatter Experiments</strong> — materials characterisation streams feeding design tolerances. [3](blob:https://outlook.office.com/976515e3-36c7-4749-975c-025c401ddfdf)</li>
-            <li><strong>Chemical Testing</strong> — sealed bunker trials with staged decontamination (e.g., L4). [3](blob:https://outlook.office.com/976515e3-36c7-4749-975c-025c401ddfdf)</li>
-            <li><strong>Advanced Research</strong> — special materials and power concepts associated with deep‑site work. [3](blob:https://outlook.office.com/976515e3-36c7-4749-975c-025c401ddfdf)</li>
-          </ul>
-        </details>
-      </li>
-
-    </ul>
-  </section>
-</div>
+      <article class="file">
+        <h2>/syllabus.htmlSyllabus (HTML page)</a></h2>
+        <small>/syllabus.html</small>
+      </article>
+    </section>
+  </main>
 </body>
 </html>
