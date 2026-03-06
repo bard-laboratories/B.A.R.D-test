@@ -4,11 +4,11 @@ html,body{height:100%}
 body{font-family:"Courier New",monospace;margin:0;background:var(--paper);color:var(--ink)}
 .wrap{max-width:1100px;margin:0 auto;padding:24px}
 header{display:flex;align-items:center;gap:16px;border-bottom:3px solid #2b2b2b;padding-bottom:16px}
-header img.logo{height: 80px;
+header img.logo{height: 70px;
     position: relative;
     position: absolute;
     top: 0;
-    left: 0;
+    left: 0:
 header div.logodev{position: fixed; top: 0; left: 0; width: 100%}
 header h1{margin:0;font-size:28px;padding-left: 50px;}
 .sub{color:#444;margin-top:4px;padding-left: 50px}
