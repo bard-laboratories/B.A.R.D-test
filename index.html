@@ -1,58 +1,159 @@
 <!DOCTYPE html>
-<html lang="en"><head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>British Atomic Research Division — Main Archive</title>
-<link rel="stylesheet" href="style.css">
-</head><body>
-  <div class="wrap">
-    <header>
-      <div class="logodiv">
-      <img src="assets/bard.png" class="logo" alt="B.A.R.D logo">
-      </div>
-      <div>
-        <h1>British Atomic Research Division</h1>
-        <div class="sub">Windscale Programme • Quarantine Zone Directorate • Robotics & Advanced Research</div>
-      </di
-    </header>
-    <nav>
-      <a href="index.html">Home</a>
-      <a href="bard.html">About B.A.R.D</a>
-      <a href="locations.html">Locations</a>
-      <a href="projects.html">Projects</a>
-      <a href="robots.html">Robotics</a>
-      <a href="dossier.html">Dossiers</a>
-      <a href="terminal.html">Terminal</a>
-      <a href="admin/admin-login.html">Admin</a>
-      <a href="files/files.html">files</a>
-    </nav>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>B.A.R.D – Files</title>
 
-    <div class="panel grid2">
-      <div>
-        <h2>Welcome</h2>
-        <p>This archive consolidates B.A.R.D records and public‑facing material for historical and training purposes. Use the navigation above to reach major sections.</p>
-        <p><a class="btn" href="dossier.html">Open Classified Dossiers</a></p>
-      </div>
-      <div>
-        <img src="assets/windscale.png" class="fit" alt="Windscale / Interchange placeholder">
-      </div>
+  <style>
+    :root {
+      --bg:#0f1117; --panel:#151a23; --line:#1f2430; --ink:#e6e6e6;
+      --muted:#aab2c0; --brand:#7aa2f7; --accent:#89d185; --hover:#1a2230;
+    }
+    * { box-sizing: border-box; }
+    body { margin:0; background:var(--bg); color:var(--ink);
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Arial, "Noto Sans";
+      line-height:1.5;
+    }
+    header { position: sticky; top:0; z-index:10; background:#151a23; border-bottom:1px solid var(--line); }
+    .wrap { max-width:1100px; margin:0 auto; padding:1rem 1.25rem; }
+    .brand { font-weight:700; color:var(--brand); text-decoration:none; }
+    nav { margin-top:.5rem; display:flex; gap:.65rem; flex-wrap:wrap; }
+    nav a { color:var(--muted); text-decoration:none; padding:.35rem .6rem; border-radius:.35rem; }
+    nav a:hover { color:var(--ink); background:var(--hover); }
+    nav a[aria-current="page"] { color:var(--ink); background:#1f2a3d; border:1px solid #2a3850; }
+
+    main { padding:2rem 1.25rem; }
+    h1 { margin:.25rem 0 1rem; font-size:clamp(1.6rem,2.5vw,2rem); }
+
+    /* Panels */
+    .panel { background:var(--panel); border:1px solid var(--line);
+      border-radius:.6rem; padding:1rem; }
+
+    /* Collapsible lists */
+    details.group { border:1px solid var(--line); border-radius:.5rem; background:#121823; }
+    details.group + details.group { margin-top:1rem; }
+    details.group > summary {
+      list-style:none; cursor:pointer; padding: .9rem 1rem; font-weight:600;
+      color:var(--ink);
+    }
+    details.group > summary::-webkit-details-marker { display:none; }
+    details.group[open] > summary { background:#141b27; border-bottom:1px solid var(--line); }
+
+    .group-body { padding:1rem; }
+
+    /* Nested robot entries */
+    details.robot { border:1px dashed var(--line); border-radius:.5rem; }
+    details.robot + details.robot { margin-top:.75rem; }
+    details.robot > summary {
+      list-style:none; cursor:pointer; padding:.6rem .75rem; font-weight:600; color:var(--accent);
+    }
+    details.robot > summary::-webkit-details-marker { display:none; }
+    .entry { padding:.75rem .9rem 1rem; color:var(--ink); }
+    .entry dl { margin:0; display:grid; grid-template-columns: 160px 1fr; gap:.35rem .75rem; }
+    .entry dt { color:var(--muted); }
+    .entry dd { margin:0; }
+
+    /* Simple lists of files/links */
+    .linklist { display:grid; gap:.5rem; }
+    .linklist a {
+      color:var(--accent); text-decoration:none; padding:.45rem .6rem; border-radius:.35rem;
+    }
+    .linklist a:hover { background:var(--hover); }
+
+    /* Small label */
+    .tag { display:inline-block; color:var(--muted); font-size:.85rem; }
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="wrap">
+      <a class="brand" href="./index.html aria-label="Primary">
+        ./index.htmlHome</a>
+        ./projects.htmlProjects</a>
+        ./files.htmlFiles</a>
+        ./locations.htmlLocations</a>
+        ./contact.htmlContact</a>
+      </nav>
     </div>
+  </header>
 
-    <div class="panel grid3">
-      <div>
-        <h2>Windscale</h2>
-        <p>Primary surface complex and cover for deeper research nodes.</p>
-      </div>
-      <div>
-        <h2>Bunker Network</h2>
-        <p>L1–L15 lattice supporting robotics, chemical testing and data vaults.</p>
-      </div>
-      <div>
-        <h2>Robotics</h2>
-        <p>Autonomous sentry platforms that maintain limited patrols long after the incident.</p>
-      </div>
-    </div>
+  <main class="wrap">
+    <h1>B.A.R.D Files</h1>
 
-    <div class="meta">Static site for GitHub Pages. No server required.</div>
-  </div>
-<script src="js/script.js" defer></script>
-</body></html>
+    <!-- ========== B.A.R.D ROBOTS ========== -->
+    <details class="group" id="bard-robots">
+      <summary>B.A.R.D ROBOTS</summary>
+      <div class="group-body">
+
+        <!-- Robot entry – duplicate this block per robot -->
+        <details class="robot">
+          <summary>Robot – NAME</summary>
+          <div class="entry">
+            <dl>
+              <dt>Robot type</dt>
+              <dd></dd>
+
+              <dt>Robot information</dt>
+              <dd></dd>
+            </dl>
+          </div>
+        </details>
+
+        <!-- Example additional empty entries (safe to duplicate/remove) -->
+        <details class="robot">
+          <summary>Robot – NAME</summary>
+          <div class="entry">
+            <dl>
+              <dt>Robot type</dt><dd></dd>
+              <dt>Robot information</dt><dd></dd>
+            </dl>
+          </div>
+        </details>
+
+      </div>
+    </details>
+
+    <!-- ========== BARD FILES (general docs) ========== -->
+    <details class="group" id="bard-files">
+      <summary>BARD FILES</summary>
+      <div class="group-body">
+        <div class="linklist">
+          <!-- Replace with real paths/files -->
+          ./assets/docs/overview.pdfoverview.pdf</a>
+          ./assets/docs/specs.mdspecs.md</a>
+          ./syllabus.htmlsyllabus.html</a>
+        </div>
+      </div>
+    </details>
+
+    <!-- ========== USERS (internal) ========== -->
+    <details class="group" id="users">
+      <summary>USERS</summary>
+      <div class="group-body">
+        <div class="linklist">
+          <!-- Add your internal user docs here -->
+          ./assets/users/index.htmldirectory</a>
+          <a href="./assets/userssvaccess.csv</a>
+        </div>
+        <span class="tag">Internal</span>
+      </div>
+    </details>
+
+    <!-- ========== PROJECTS (lore) ========== -->
+    <details class="group" id="projects">
+      <summary>PROJECTS</summary>
+      <div class="group-body">
+        <div class="linklist">
+          <!-- Link to project write-ups -->
+          ./projects.html#currentcurrent projects</a>
+          ./assets/projects/roadmap.mdroadmap.md</a>
+          ./assets/projects/archive/archive/</a>
+        </div>
+      </div>
+    </details>
+
+  </main>
+</body>
+</html>
