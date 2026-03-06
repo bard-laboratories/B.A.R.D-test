@@ -24,10 +24,18 @@ label{display:block;margin:8px 0}
 <script>
 const lines=[
   "> boot bard_console",
+  "> boot B.A.R.D_subsystem",
+  "> BOOTING ....",
+   "> INSTALLING ....",
+   "> INSTALLING ....",
+   "> CONNECTING TO B.A.R.D SERVER ....",
+   "> RESTARTING ....",
   "> initialising subsystems ... OK",
   "> linking Interchange robotics facility ... OK",
   "> Windscale core telemetry ... PARTIAL",
   "> Oberon signal ... DETECTED",
+   "> BOOTING ....",
+   "> BOOTING ....",
   "> decrypting research logs ... OK",
   "> bunker lattice ping: L1–L15 ONLINE",
   "> robotics registry: SENTRIES ACTIVE",
@@ -35,8 +43,10 @@ const lines=[
   "> compiling hazard map ... OK",
   "> opening classified dossiers ... READY",
   "> session elevated: ADMINISTRATOR",
+   ">   -----WELCOME USER -----   ",
   "> --- ROBOTICS SUMMARY ---",
-  "> Class B Unit 45 : ACTIVE  WARNING INTRUDER DETECTED",
+  "> Class B Unit 45 : ACTIVE  WARNING UNIDENTIFED USER DETECTED",
+   "> Class B Unit 45 : ACTIVE ACTIVATING DEFENCE MESURES",
   "> Orange/White/Black sentries : ACTIVE",
   "> Flamethrower variant : DEPOLYED  (ERROR) 5 NOT RESPONDING RESET CONNECTION",
   "> HMG variant : DEPLOYED",
@@ -44,8 +54,9 @@ const lines=[
   "> /robots.html",
   "> /dossier.html",
   "> /locations.html",
-  "> iNTRUDER DETECTED",
-  "> sHUTTING DOWN",
+  "> UNIDENTIFIED USER",
+  "> WRONG IP DETECTED",
+  "> SHUTTING DOWN",
   "> --- END ---"
 ];
 function runOut(target, arr, delay=35){
