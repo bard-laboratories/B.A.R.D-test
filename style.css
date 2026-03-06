@@ -8,7 +8,7 @@ header img.logo{height: 70px;
     position: relative;
     position: absolute;
     top: 0;
-    left: 0:
+    left: 0;
 header div.logodev{position: fixed; top: 0; left: 0; width: 100%}
 header h1{margin:0;font-size:28px;padding-left: 50px;}
 .sub{color:#444;margin-top:4px;padding-left: 50px}
