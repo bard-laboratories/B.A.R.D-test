@@ -63,7 +63,7 @@
 
     /* Progress bar for Active users */
     .bar{margin-top:.5rem;height:10px;background:#0c1220;border:1px solid var(--line);border-radius:999px;overflow:hidden}
-    .bar-fill{height:100%;background:var(--blue);width:0%;transition:width .3s ease}
+    .bar-fill{height:100%;background:#4ea3ff;width:0%;transition:width .3s ease}
 
     /* Small search input */
     .search{flex:1;min-width:240px;background:#0f1117;color:#e6e6e6;border:1px solid #1f2430;border-radius:.4rem;padding:.55rem .65rem}
@@ -338,79 +338,106 @@
     })();
   </script>
 
+  <!-- ---------- Firebase presence (filtered + heartbeat + per-user) ---------- -->
   <script type="module">
-  // ---------- YOUR REAL FIREBASE CONFIG ----------
-  const firebaseConfig = {
-    apiKey: "AIzaSyDSkdC2shGSGv58Sqv8rchkomNxS525RRU",
-    authDomain: "b-a-r-d.firebaseapp.com",
-    databaseURL: "https://b-a-r-d-default-rtdb.firebaseio.com",
-    projectId: "b-a-r-d",
-    appId: "1:998685683728:web:6b3789b12049e903fcda95"
-  };
-  // ----------------------------------------------
+    const firebaseConfig = {
+      apiKey: "AIzaSyDSkdC2shGSGv58Sqv8rchkomNxS525RRU",
+      authDomain: "b-a-r-d.firebaseapp.com",
+      databaseURL: "https://b-a-r-d-default-rtdb.firebaseio.com",
+      projectId: "b-a-r-d",
+      appId: "1:998685683728:web:6b3789b12049e903fcda95"
+    };
 
-  // Accept BOTH legacy (.firebaseio.com) and regional (.firebasedatabase.app) DB URLs
-  const configured =
-    !!firebaseConfig.apiKey &&
-    !!firebaseConfig.projectId &&
-    !!firebaseConfig.databaseURL &&
-    (firebaseConfig.databaseURL.includes("firebaseio.com") || firebaseConfig.databaseURL.includes("firebasedatabase.app"));
+    const configured =
+      !!firebaseConfig.apiKey &&
+      !!firebaseConfig.projectId &&
+      !!firebaseConfig.databaseURL &&
+      (firebaseConfig.databaseURL.includes("firebaseio.com") || firebaseConfig.databaseURL.includes("firebasedatabase.app"));
 
-  const countEl = document.getElementById('activeUsersCount');
-  const barEl   = document.getElementById('activeUsersBar');
-  const pctEl   = document.getElementById('activeUsersPct');
+    const countEl = document.getElementById('activeUsersCount');
+    const barEl   = document.getElementById('activeUsersBar');
+    const pctEl   = document.getElementById('activeUsersPct');
 
-  const updateActiveUsers = (n) => {
-    const pct = Math.max(0, Math.min(100, n)); // 1 user = 1%
-    countEl.textContent = String(n);
-    barEl.style.width = pct + '%';
-    pctEl.textContent = pct + '%';
-  };
-  updateActiveUsers(0);
+    const updateActiveUsers = (n) => {
+      const pct = Math.max(0, Math.min(100, n)); // 1 user = 1%
+      countEl.textContent = String(n);
+      barEl.style.width = pct + '%';
+      pctEl.textContent = pct + '%';
+    };
+    updateActiveUsers(0);
 
-  if (!configured) {
-    console.warn("[B.A.R.D] Active users disabled (missing/invalid config).");
-  } else {
-    try {
-      const [{ initializeApp },
-             { getDatabase, ref, onValue, set, onDisconnect, serverTimestamp },
-             { getAuth, signInAnonymously, onAuthStateChanged }] = await Promise.all([
-        import('https://www.gstatic.com/firebasejs/10.12.3/firebase-app.js'),
-        import('https://www.gstatic.com/firebasejs/10.12.3/firebase-database.js'),
-        import('https://www.gstatic.com/firebasejs/10.12.3/firebase-auth.js')
-      ]);
+    if (!configured) {
+      console.warn("[B.A.R.D] Active users disabled (missing/invalid config).");
+    } else {
+      try {
+        const [{ initializeApp },
+               { getDatabase, ref, onValue, set, onDisconnect, serverTimestamp, get, child },
+               { getAuth, signInAnonymously, onAuthStateChanged }] = await Promise.all([
+          import('https://www.gstatic.com/firebasejs/10.12.3/firebase-app.js'),
+          import('https://www.gstatic.com/firebasejs/10.12.3/firebase-database.js'),
+          import('https://www.gstatic.com/firebasejs/10.12.3/firebase-auth.js')
+        ]);
 
-      const app  = initializeApp(firebaseConfig);
-      const db   = getDatabase(app);
-      const auth = getAuth(app);
+        const app  = initializeApp(firebaseConfig);
+        const db   = getDatabase(app);
+        const auth = getAuth(app);
 
-      // Anonymous auth required for presence
-      await signInAnonymously(auth);
+        // Sign in anonymously so this tab can write presence
+        await signInAnonymously(auth);
 
-      onAuthStateChanged(auth, async (user) => {
-        if (!user) return;
+        onAuthStateChanged(auth, async (user) => {
+          if (!user) return;
 
-        // Each tab writes a session node under /presence/{uid}/{sessionId}
-        const uid = user.uid;
-        const sessionId = Math.random().toString(36).slice(2,10);
+          const uid = user.uid;
+          const sessionId = Math.random().toString(36).slice(2,10);
+          const myPath = `presence/${uid}/${sessionId}`;
+          const myRef  = ref(db, myPath);
 
-        const myRef = ref(db, `presence/${uid}/${sessionId}`);
-        await set(myRef, { ts: serverTimestamp(), page: location.pathname });
-        onDisconnect(myRef).remove();
+          // Write initial presence
+          await set(myRef, { ts: serverTimestamp(), page: location.pathname });
 
-        // Live total: sum of child counts under /presence
-        const root = ref(db, 'presence');
-        onValue(root, (snap) => {
-          let total = 0;
-          snap.forEach(u => { total += u.size || u.numChildren(); });
-          updateActiveUsers(total);
+          // Ensure removal on clean close
+          onDisconnect(myRef).remove();
+
+          // Heartbeat every 20s to keep this session fresh
+          setInterval(async () => {
+            await set(myRef, { ts: serverTimestamp(), page: location.pathname });
+          }, 20000);
+
+          // Count only RECENT sessions (last 45s), and count PER-USER, optionally scoped to this page
+          const presenceRoot = ref(db, 'presence');
+          onValue(presenceRoot, (snap) => {
+            const now = Date.now();
+            const RECENT_MS = 45000;
+            const SCOPE_PATH = location.pathname; // change to null to count all pages
+
+            let totalUsers = 0;
+
+            snap.forEach(uidNode => {
+              let userActive = false;
+              uidNode.forEach(sessNode => {
+                const v = sessNode.val();
+                if (!v) return;
+
+                const ts = typeof v.ts === 'number' ? v.ts : 0;
+                const fresh = ts && (now - ts <= RECENT_MS);
+                const pageOK = !SCOPE_PATH || v.page === SCOPE_PATH;
+
+                if (fresh && pageOK) {
+                  userActive = true;
+                }
+              });
+              if (userActive) totalUsers += 1;
+            });
+
+            updateActiveUsers(totalUsers);
+          });
         });
-      });
-    } catch (err) {
-      console.error("[B.A.R.D] Active users setup failed:", err);
-      // Keep counter at 0 if Firebase fails
+      } catch (err) {
+        console.error("[B.A.R.D] Active users setup failed:", err);
+        // Keep counter at 0 if Firebase fails
+      }
     }
-  }
-</script>
+  </script>
 </body>
 </html>
