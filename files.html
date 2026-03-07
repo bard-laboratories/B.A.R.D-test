@@ -63,7 +63,7 @@
 
     /* Progress bar for Active users */
     .bar{margin-top:.5rem;height:10px;background:#0c1220;border:1px solid var(--line);border-radius:999px;overflow:hidden}
-    .bar-fill{height:100%;background:#4ea3ff;width:0%;transition:width .3s ease}
+    .bar-fill{height:100%;background:var(--blue);width:0%;transition:width .3s ease}
 
     /* Small search input */
     .search{flex:1;min-width:240px;background:#0f1117;color:#e6e6e6;border:1px solid #1f2430;border-radius:.4rem;padding:.55rem .65rem}
@@ -72,7 +72,6 @@
 <body>
   <header>
     <div class="wrap">
-      <!-- your original brand/link, minimally fixed to be a valid <a> -->
       ./index.htmlB.A.R.D.</a>
       <nav aria-label="Primary">
         ./index.htmlHome</a>
@@ -103,13 +102,15 @@
         <div class="card">
           <h3>Active projects</h3>
           <div class="big ok" id="kpiProjects">—</div>
-          <span class="tag">lore / R&amp;D</span>
+          <span class="tag">lore / R&D</span>
         </div>
         <div class="card">
           <h3>Users listed</h3>
           <div class="big" id="kpiUsers">—</div>
           <span class="tag">directory size</span>
         </div>
+
+        <!-- New: Active users (live) -->
         <div class="card">
           <h3>Active users</h3>
           <div class="big" id="activeUsersCount">0</div>
@@ -137,7 +138,7 @@
           <h3>Recent files</h3>
           <div class="list">
             ./assets/docs/overview.pdfoverview.pdf <small>docs</small></a>
-            ./assets/projects/roadmap.mdroadmap.md <small>projects</small></a>
+            <a href="./assets/projects/roadmapp.md <small>projects</small></a>
             ./syllabus.htmlsyllabus.html <small>site</small></a>
           </div>
         </div>
@@ -148,6 +149,7 @@
     <details class="group" id="bard-robots" open>
       <summary>B.A.R.D ROBOTS</summary>
       <div class="group-body">
+
         <p class="sub" style="margin:.25rem 0 .6rem;font-size:1.05rem;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.04em">
           Catalog
         </p>
@@ -157,8 +159,8 @@
           <summary>Robot – NAME</summary>
           <div class="entry">
             <dl>
-              <dt>Robot type</dt><dd></dd>
-              <dt>Robot information</dt><dd></dd>
+              <dt>Robot type</dt><dd><!-- e.g., Recon / Assault / Utility --></dd>
+              <dt>Robot information</dt><dd><!-- specs, sensors, power, chassis, software; cross‑check with Atomfall notes --></dd>
             </dl>
           </div>
         </details>
@@ -172,6 +174,7 @@
             </dl>
           </div>
         </details>
+
       </div>
     </details>
 
@@ -181,14 +184,14 @@
       <div class="group-body">
         <div class="list">
           <!-- Replace with your real documents -->
-          <a href="./assets/docs/overview.pdfpdf</a>
+          ./assets/docs/overview.pdfoverview.pdf</a>
           ./assets/docs/specs.mdspecs.md</a>
           ./syllabus.htmlsyllabus.html</a>
         </div>
       </div>
     </details>
 
-    <!-- ================= USERS (shown inside Files page) ================= -->
+    <!-- ================= USERS (data‑driven from inline JSON) ================= -->
     <details class="group" id="users" open>
       <summary>USERS</summary>
       <div class="group-body">
@@ -234,12 +237,33 @@
 
   </main>
 
-  <!-- ---------- Inline Users JSON (edit this list) ---------- -->
+  <!-- ---------- Inline data (edit this to update Users) ---------- -->
   <script id="users-data" type="application/json">
   [
-    { "name":"A. Operator","role":"Field Lead – Recon","clearance":"ALPHA","status":"Active","contact":"mailto:operator@example.com","notes":"Primary liaison. Cross‑checked with Atomfall notes."},
-    { "name":"B. Engineer","role":"R&D – Robotics","clearance":"BETA","status":"Active","contact":"mailto:engineer@example.com","notes":"Maintains chassis and power modules."},
-    { "name":"C. Archivist","role":"Records – Lore Projects","clearance":"GAMMA","status":"Reserve","contact":"mailto:archivist@example.com","notes":"Curates B.A.R.D project history."}
+    {
+      "name": "A. Operator",
+      "role": "Field Lead – Recon",
+      "clearance": "ALPHA",
+      "status": "Active",
+      "contact": "mailto:operator@example.com",
+      "notes": "Primary liaison. Cross‑checked with Atomfall notes."
+    },
+    {
+      "name": "B. Engineer",
+      "role": "R&D – Robotics",
+      "clearance": "BETA",
+      "status": "Active",
+      "contact": "mailto:engineer@example.com",
+      "notes": "Maintains chassis and power modules."
+    },
+    {
+      "name": "C. Archivist",
+      "role": "Records – Lore Projects",
+      "clearance": "GAMMA",
+      "status": "Reserve",
+      "contact": "mailto:archivist@example.com",
+      "notes": "Curates B.A.R.D project history."
+    }
   ]
   </script>
 
@@ -317,67 +341,74 @@
 
   <!-- ---------- Live Active Users (Firebase presence) ---------- -->
   <script type="module">
-    /* Your real Firebase config (from your console) */
+    // Replace the placeholders below with your Firebase web app config.
+    // If you leave the "YOUR_..." placeholders, this block safely does nothing.
     const firebaseConfig = {
-      apiKey: "AIzaSyDyyq8nfIXJE_xPsFQqeySZlBXUcIKMio",
-      authDomain: "b-a-r-d-5e93c.firebaseapp.com",
-      databaseURL: "https://b-a-r-d-5e93c-default-rtdb.europe-west1.firebasedatabase.app",
-      projectId: "b-a-r-d-5e93c",
-      storageBucket: "b-a-r-d-5e93c.firebasestorage.app",
-      messagingSenderId: "424994363683",
-      appId: "1:424994363683:web:05b03bddea1a88b942816"
+      apiKey:      "YOUR_API_KEY",
+      authDomain:  "YOUR_PROJECT_ID.firebaseapp.com",
+      databaseURL: "https://YOUR_PROJECT_ID-default-rtdb.firebaseio.com",
+      projectId:   "YOUR_PROJECT_ID",
+      appId:       "YOUR_APP_ID"
     };
+
+    const isConfigured =
+      firebaseConfig.apiKey && !firebaseConfig.apiKey.startsWith("YOUR_") &&
+      firebaseConfig.projectId && !firebaseConfig.projectId.startsWith("YOUR_");
 
     const countEl = document.getElementById('activeUsersCount');
     const barEl   = document.getElementById('activeUsersBar');
     const pctEl   = document.getElementById('activeUsersPct');
 
     function updateActiveUsers(n){
-      const pct = Math.max(0, Math.min(100, n)); // 1 user = 1%
+      // Scale: 1 user = 1% (matches your example). Change the math if you want a different scale.
+      const pct = Math.max(0, Math.min(100, n));
       countEl.textContent = String(n);
-      barEl.style.width   = pct + '%';
-      pctEl.textContent   = pct + '%';
+      barEl.style.width = pct + '%';
+      pctEl.textContent = pct + '%';
     }
     updateActiveUsers(0);
 
-    try {
-      const { initializeApp } = await import('https://www.gstatic.com/firebasejs/10.12.3/firebase-app.js');
-      const { getDatabase, ref, onValue, set, onDisconnect, serverTimestamp } =
-        await import('https://www.gstatic.com/firebasejs/10.12.3/firebase-database.js');
-      const { getAuth, signInAnonymously, onAuthStateChanged } =
-        await import('https://www.gstatic.com/firebasejs/10.12.3/firebase-auth.js');
+    if (!isConfigured) {
+      console.warn("[B.A.R.D] Active users is disabled (no Firebase config set).");
+    } else {
+      try {
+        const [{ initializeApp },
+               { getDatabase, ref, onValue, set, onDisconnect, serverTimestamp },
+               { getAuth, signInAnonymously, onAuthStateChanged }] = await Promise.all([
+          import('https://www.gstatic.com/firebasejs/10.12.3/firebase-app.js'),
+          import('https://www.gstatic.com/firebasejs/10.12.3/firebase-database.js'),
+          import('https://www.gstatic.com/firebasejs/10.12.3/firebase-auth.js')
+        ]);
 
-      const app  = initializeApp(firebaseConfig);
-      const db   = getDatabase(app);
-      const auth = getAuth(app);
+        const app = initializeApp(firebaseConfig);
+        const db  = getDatabase(app);
+        const auth= getAuth(app);
 
-      await signInAnonymously(auth).catch(console.error);
+        // Sign in anonymously so we can record presence
+        await signInAnonymously(auth).catch(console.error);
 
-      onAuthStateChanged(auth, async (user) => {
-        if (!user) return;
-        const uid = user.uid;
-        const sessionId = Math.random().toString(36).slice(2,10);
-        const myRef = ref(db, `presence/${uid}/${sessionId}`);
+        onAuthStateChanged(auth, async (user) => {
+          if (!user) return;
+          const uid = user.uid;
+          const sessionId = Math.random().toString(36).slice(2,10);
+          const myRefPath = `presence/${uid}/${sessionId}`;
 
-        await set(myRef, { ts: serverTimestamp(), page: location.pathname });
-        onDisconnect(myRef).remove();
+          const { ref: dbRef } = await import('https://www.gstatic.com/firebasejs/10.12.3/firebase-database.js');
 
-        // Clean up on mobile/tab close
-        addEventListener('pagehide', () => navigator.sendBeacon?.(
-          firebaseConfig.databaseURL + '/presence/' + encodeURIComponent(uid) + '/' + sessionId + '.json',
-          JSON.stringify(null)
-        ));
+          const myRef = dbRef(db, myRefPath);
+          await set(myRef, { ts: serverTimestamp(), page: location.pathname });
+          onDisconnect(myRef).remove();
 
-        // Listen to total active sessions across all users
-        const presenceRoot = ref(db, 'presence');
-        onValue(presenceRoot, (snap) => {
-          let total = 0;
-          snap.forEach(userNode => { total += userNode.numChildren(); });
-          updateActiveUsers(total);
+          const presenceRoot = dbRef(db, 'presence');
+          onValue(presenceRoot, (snap) => {
+            let total = 0;
+            snap.forEach(userNode => { total += userNode.size || userNode.numChildren(); });
+            updateActiveUsers(total);
+          });
         });
-      });
-    } catch (err) {
-      console.error("Active users setup failed:", err);
+      } catch (err) {
+        console.error("Active users setup failed:", err);
+      }
     }
   </script>
 </body>
