@@ -70,35 +70,34 @@
 </section>
 </div></body></html>
 
-<!-- ===== Telemetry (aligned in a single straight line) ===== -->
+
+
+                                   <!-- ===== /Cpu RENDER ===== -->
+  
 <script>
 (() => {
-  // 1) Inject tiny CSS so we don't touch your <head>
+
+  
   const css = `
-    /* container sits under each bio */
     .telemetry{display:block;margin-top:6px;font-size:12px;color:#555}
-    /* one straight line: title + chips */
+    /* Title on its own line */
+    .telemetry-title{font-weight:700;color:#333;margin:.25rem 0 .35rem;font-size:12px;letter-spacing:.02em}
+    /* A single straight line for the chips */
     .telemetry-row{display:flex;align-items:center;gap:10px;flex-wrap:nowrap}
-    /* short, firm title so row stays straight */
-    .telemetry-title{font-weight:700;color:#333;font-size:12px;letter-spacing:.02em;white-space:nowrap;min-width:145px}
-    /* chips */
     .telemetry .chip{display:flex;align-items:center;gap:6px;background:#fff;border:1px solid #cfc7b6;border-radius:6px;padding:4px 6px;white-space:nowrap}
     .telemetry .label{font-weight:700;color:#333;letter-spacing:.02em}
     .telemetry .bar{width:70px;height:8px;background:#f2efe6;border:1px solid #cfc7b6;border-radius:999px;overflow:hidden}
     .telemetry .fill{height:100%;width:0%;background:#0b3c66;transition:width .25s ease}
     .telemetry .chip.temp .fill{background:#b21f2d}
     .telemetry .val{min-width:34px;text-align:right;color:#333}
-    /* keep row from wrapping at narrow widths: allow small shrink but keep chips readable */
-    @media (max-width: 520px){
-      .telemetry .bar{width:56px}
-      .telemetry-title{min-width:130px}
-    }
+    @media (max-width:520px){ .telemetry .bar{width:56px} }
   `;
   const style = document.createElement('style');
   style.textContent = css;
   document.head.appendChild(style);
 
-  // 2) Seeds per robot based on the <h2> title (no edits to HTML)
+  
+  
   const titleSeeds = new Map([
     ["class b robot unit 45", {cpu:41, ram:21, temp:28}],
     ["orange b.a.r.d robot",   {cpu:34, ram:45, temp:48}],
@@ -109,7 +108,8 @@
     ["heavy machine-gun variant",{cpu:47, ram:36, temp:36}] // hyphen fallback
   ]);
 
-  // 3) Append telemetry widget after each bio <p>
+ 
+  
   function makeTelemetryNode(seeds){
     const wrap = document.createElement('div');
     wrap.className = 'telemetry';
@@ -117,9 +117,12 @@
     wrap.dataset.ram  = seeds.ram  ?? 30;
     wrap.dataset.temp = seeds.temp ?? 45;
     if (seeds.boost) wrap.dataset.boost = seeds.boost;
+
+ 
+    
     wrap.innerHTML = `
+      <div class="telemetry-title">Robot status monitor</div>
       <div class="telemetry-row">
-        <div class="telemetry-title">Robot status monitor</div>
         <div class="chip"><span class="label">CPU</span>
           <div class="bar"><div class="fill" data-key="cpu"></div></div>
           <span class="val" data-key="cpu">--</span>
@@ -149,7 +152,8 @@
     telemetryNodes.push(node);
   });
 
-  // 4) Animate telemetry (irregular ticks + occasional spikes)
+  
+  
   function startTelemetry(box){
     const cfg = {
       cpu:{drift:2.6,spikeChance:0.10,spikeMin:10,spikeMax:28,cooldown:0.10,min:0,max:100},
@@ -204,3 +208,5 @@
   telemetryNodes.forEach(startTelemetry);
 })();
 </script>
+
+
